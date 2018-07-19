@@ -6,3 +6,11 @@ db\.sqlite3
 \.idea/
 
 Calculate/migrations/
+
+Calculate/__pycache__/
+
+Cat_Br_Tr/Debug/
+
+Cat_Br_Tr/tree\.dot
+
+Cat_Br_Tr/tree\.png
