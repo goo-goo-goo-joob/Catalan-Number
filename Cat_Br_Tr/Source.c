@@ -1,5 +1,5 @@
 #include"Check.h"
-const char brackets[] = "(()())()()()(())";//(()())()()()(())
+
 void convert(tnode* tree, char* brackets, int key) {
 	tnode *node = tree;
 	while (*brackets != '\0') {
@@ -76,7 +76,16 @@ void deltree(tnode *tree) {
 		free(tree);
 	}
 }
-int main() {
+int  main(int argc, char* argv[]) {
+
+	char command[512];
+	strcpy(command, "\"\"%programfiles(x86)%/Graphviz2.38/bin/dot.exe\"\" -Tpng tree.dot -o ");
+	if (argc == 3)
+	{
+		strcat(command, argv[2]);
+	}
+	else
+		exit(1);
 	setlocale(LC_ALL, "Russian");
 	setlocale(LC_NUMERIC, "eng");
 	tnode *tree = NULL;
@@ -91,13 +100,13 @@ int main() {
 	tree->left = tree->right = NULL;
 	tree->key = key;
 	tree->parent = NULL;
-	puts(brackets);
-	check(brackets);
-	convert(tree, brackets, key);
+	puts(argv[1]);
+	check(argv[1]);
+	convert(tree, argv[1], key);
 	print_dot(f, tree);
 	deltree(tree);
 	tree = NULL;
 	fclose(f);
-	system("\"\"%programfiles(x86)%/Graphviz2.38/bin/dot.exe\"\" -Tpng tree.dot -o tree.png");
+	system(command);
 	return 0;
 }
