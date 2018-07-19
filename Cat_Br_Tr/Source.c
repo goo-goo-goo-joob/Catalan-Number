@@ -64,7 +64,7 @@ void printTree(FILE* f, tnode* tree) {
 void print_dot(FILE* f, tnode* tree) {
 	fprintf(f, "graph {\n");
 	fprintf(f, "	nodesep=0.6\n");
-	fprintf(f, "	node [shape = circle];\n");//fontcolor=\"white\"
+	fprintf(f, "	node [shape = circle, fontcolor=\"white\"];\n");//fontcolor=\"white\"
 	fprintf(f, "	%d;\n", tree->key);
 	printTree(f, tree);
 	fprintf(f, "}\n");
@@ -93,8 +93,8 @@ int  main(int argc, char* argv[]) {
 	char name[] = "tree.dot";
 	FILE* f=fopen(name, "wt");
 	if (!f) {
-		printf("Ошибка: невозможно открыть файл.");
-		exit(1);
+		printf("Error: unable to open file.");
+		exit(3);
 	}
 	tree = (tnode*)malloc(sizeof(tnode));
 	tree->left = tree->right = NULL;

@@ -7,16 +7,16 @@ void check(char* br) {
 		else if (br[i] == ')')
 			j--;
 		else {
-			printf("Oшибка: неверный символ");
-			exit(1);
+			printf("Error: invalid symbol");
+			exit(2);
 		}
 		if (j < 0) {
-			printf("Oшибка: неправильна¤ скобочна¤ структура");
+			printf("Error: incorrect bracket structure");
 			exit(1);
 		}
 	}
 	if (j != 0) {
-		printf("ќшибка: неправильна¤ скобочна¤ структура");
+		printf("Error: incorrect bracket structure");
 		exit(1);
 	}
 }

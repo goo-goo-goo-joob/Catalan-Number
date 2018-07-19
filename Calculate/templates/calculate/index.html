@@ -5,6 +5,42 @@
     <title>Catalan calculator</title>
 </head>
 <body>
+<form action="" method="post">
+    {% csrf_token %}
+    <p><label for="brackets">Enter the correct bracket structure</label>
+        <input type="text" name="brackets" id="brackets" value="{{ brackets }}" required>
+    </p>
+    <p>
+    <fieldset>
+        <legend>Choose structure to convert</legend>
+
+        <div>
+            <input type="radio" name="struct" value="bin" {% if struct == "bin" %}
+                   checked
+            {% endif %} />Binary tree
+        </div>
+
+        <div>
+            <input type="radio" name="struct" value="root" {% if struct == "root" %}
+                   checked
+            {% endif %}>Rooted tree
+        </div>
+
+        <div>
+            <input type="radio" name="struct" value="table" {% if struct == "table" %}
+                   checked
+            {% endif %}>Table Jung
+        </div>
+
+    </fieldset>
+    </p>
+    <label>
+        <input type="checkbox" name="flag" {% if choice == "on" %}
+               checked
+        {% endif %}> Enable numbering
+        <input type="submit" value="Send">
+    </label>
+</form>
 {% if brackets %}
     <p>You entered {{ brackets }}</p>
 {% endif %}
@@ -12,12 +48,10 @@
     <p>You result</p>
     <img src="{{ img }}">
 {% endif %}
-<form action="" method="post">
-    {% csrf_token %}
-    <label for="brackets">Enter the correct bracket structure</label>
-    <input type="text" name="brackets" id="brackets" value="{{ brackets }}" required>
-    <input type="submit" value="Send">
-</form>
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
 
 </body>
 </html>
