@@ -22,6 +22,8 @@ def index(request):
                 code = subprocess.call(['Cat_Tree_Win_Num.exe', context['brackets'], 'Calculate/' + name])
             else:
                 code = subprocess.call(['Cat_Tree_Win.exe', context['brackets'], 'Calculate/' + name])
+        elif context['struct'] == 'table':
+            code = subprocess.call(['Cat_Jung.exe', context['brackets'], 'Calculate/' + name])
 
         if code == 0:
             context['img'] = name

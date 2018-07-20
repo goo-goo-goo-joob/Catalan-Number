@@ -27,19 +27,25 @@
         </div>
 
         <div>
-            <input type="radio" name="struct" value="table" {% if struct == "table" %}
-                   checked
-            {% endif %}>Table Jung
+            <input type="radio" name="struct" value="table" onchange="table()"
+             {% if struct == "table" %} checked {% endif %}>Table Jung
         </div>
 
     </fieldset>
     </p>
+
     <label>
-        <input type="checkbox" name="flag" {% if choice == "on" %}
-               checked
-        {% endif %}> Enable numbering
+        <input type="checkbox" id="flag" name="flag" {% if choice == "on" %} checked {% endif %} disabled="disabled"> Enable numbering
         <input type="submit" value="Send">
     </label>
+    <script>
+        function table(f) {
+            var flag = document.getElementById('flag');
+
+            if (f.table.checked) flag.disabled = true;
+            else flag.disabled = false;
+        }
+    </script>
 </form>
 {% if brackets %}
     <p>You entered {{ brackets }}</p>
