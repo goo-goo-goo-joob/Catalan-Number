@@ -17,33 +17,39 @@
         <div>
             <input type="radio" name="struct" value="bin" {% if struct == "bin" %}
                    checked
-            {% endif %} />Binary tree
+            {% endif %} onclick="bin()"/>Binary tree
         </div>
 
         <div>
             <input type="radio" name="struct" value="root" {% if struct == "root" %}
                    checked
-            {% endif %}>Rooted tree
+            {% endif %} onclick="root()">Rooted tree
         </div>
 
         <div>
-            <input type="radio" name="struct" value="table" onchange="table()"
-             {% if struct == "table" %} checked {% endif %}>Table Jung
+            <input type="radio" name="struct" id="struct" value="table" onclick="table()"
+                    {% if struct == "table" %} checked {% endif %}>Table Jung
         </div>
 
     </fieldset>
     </p>
 
     <label>
-        <input type="checkbox" id="flag" name="flag" {% if choice == "on" %} checked {% endif %} disabled="disabled"> Enable numbering
+        <input type="checkbox" id="fl" name="flag" {% if struct == "table" %}disabled="disabled"{% endif %}
+               {% if choice == "on" %}checked{% endif %}> Enable numbering
         <input type="submit" value="Send">
     </label>
     <script>
-        function table(f) {
-            var flag = document.getElementById('flag');
+        function table({{choice}}) {
+            fl.setAttribute('disabled', "disabled");
+        }
 
-            if (f.table.checked) flag.disabled = true;
-            else flag.disabled = false;
+        function bin(f) {
+            if (fl.getAttribute('disabled')) fl.removeAttribute('disabled');
+        }
+
+        function root(f) {
+            if (fl.getAttribute('disabled')) fl.removeAttribute('disabled');
         }
     </script>
 </form>
