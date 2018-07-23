@@ -5,7 +5,7 @@
     <title>Catalan calculator</title>
 </head>
 <body>
-<form action="" method="post">
+<form action="" method="post" onchange="reDraw()">
     {% csrf_token %}
     <p><label for="brackets">Enter the correct bracket structure</label>
         <input type="text" name="brackets" id="brackets" value="{{ brackets }}" required>
@@ -17,17 +17,17 @@
         <div>
             <input type="radio" name="struct" value="bin" {% if struct == "bin" %}
                    checked
-            {% endif %} onclick="bin()"/>Binary tree
+            {% endif %} />Binary tree
         </div>
 
         <div>
             <input type="radio" name="struct" value="root" {% if struct == "root" %}
                    checked
-            {% endif %} onclick="root()">Rooted tree
+            {% endif %} >Rooted tree
         </div>
 
         <div>
-            <input type="radio" name="struct" id="struct" value="table" onclick="table()"
+            <input type="radio" name="struct" id="struct" value="table"
                     {% if struct == "table" %} checked {% endif %}>Table Jung
         </div>
 
@@ -40,16 +40,14 @@
         <input type="submit" value="Send">
     </label>
     <script>
-        function table({{choice}}) {
-            fl.setAttribute('disabled', "disabled");
-        }
-
-        function bin(f) {
-            if (fl.getAttribute('disabled')) fl.removeAttribute('disabled');
-        }
-
-        function root(f) {
-            if (fl.getAttribute('disabled')) fl.removeAttribute('disabled');
+        function reDraw() {
+            let target = document.getElementById('fl');
+            if (document.getElementById('struct').checked) {
+                target.checked = false;
+                target.disabled = true;
+            }
+            else
+                target.disabled = false;
         }
     </script>
 </form>
