@@ -37,18 +37,22 @@
     <label>
         <input type="checkbox" id="fl" name="flag" {% if struct == "table" %}disabled="disabled"{% endif %}
                {% if choice == "on" %}checked{% endif %}> Enable numbering
-        <input type="submit" value="Send">
     </label>
+    <input type="submit" value="Send">
     <script>
         function reDraw() {
             let target = document.getElementById('fl');
             if (document.getElementById('struct').checked) {
-                target.checked = false;
-                target.disabled = true;
+                //target.checked = false;
+                //target.disabled = true;
+                target.parentNode.hidden = true;
             }
             else
-                target.disabled = false;
+                {#target.disabled = false;#}
+                target.parentNode.hidden = false;
         }
+
+        document.addEventListener("DOMContentLoaded", reDraw);
     </script>
 </form>
 {% if brackets %}
