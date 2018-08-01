@@ -1,28 +1,39 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import math
 
-def polygon(brackets, name):
+def polygon(brackets, name, choice):
     #brackets = "(()())"
-    l = 100  # длина ребра
-    p = 30  # отступ
+    l = 500  # длина ребра
+    p = 50  # отступ
+    r = 40 #радиус круга
+    outline = 3 #толщина круга
+    set = 10 #отступ цифр
+    font = ImageFont.truetype("arial.ttf", 40)
     n = len(brackets) / 2 + 2  # кол-во вершин
     R = l / (2 * math.sin(math.pi / n))
     img = Image.new('RGB', (int(R + p) * 2 + 1, int(R + p) * 2 + 1), (255, 255, 255))
     draw = ImageDraw.Draw(img)
     center = [R + p, R + p]
     coord = []
-    row = [R + p, 2 * R + p]
-    coord.append(row)
-    for i in range(1, int(n)):
-        alph = 2 * math.pi * i / n  # угол поворота
+    for i in range(0, int(n)):
+        alph = 2 * math.pi * i / n - math.pi / n # угол поворота
         row = [R + p + R * math.sin(alph), R + p + R * math.cos(alph)]
         coord.append(row)
-        draw.line((coord[i - 1][0], coord[i - 1][1], coord[i][0], coord[i][1]), fill=0, width=3)
-    draw.line((coord[0][0], coord[0][1], coord[i][0], coord[i][1]), fill=0, width=3)
-    draw.line((coord[0][0], coord[0][1], coord[1][0], coord[1][1]), fill=127, width=3)
+        draw.line((coord[i - 1][0], coord[i - 1][1], coord[i][0], coord[i][1]), fill=0, width=4)
+    draw.line((coord[0][0], coord[0][1], coord[i][0], coord[i][1]), fill=0, width=4)
+    draw.line((coord[0][0], coord[0][1], coord[1][0], coord[1][1]), fill=127, width=5)
     partition(draw, coord, brackets, int(n), 0, 1)
+    for i in range(0, int(n)):
+        draw.ellipse((coord[i][0]-r-outline, coord[i][1]-r-outline, coord[i][0]+r+outline, coord[i][1]+r+outline), fill='black')
+        draw.ellipse((coord[i][0]-r, coord[i][1]-r, coord[i][0]+r, coord[i][1]+r), fill='white')
+        if choice=='on':
+            if (i+1)>9:
+                set = 23
+            draw.text((coord[i][0]-set, coord[i][1]-20),'%d' % (i+1),fill = "black", font = font)
     del draw
-    img.save(name,subsampling=0, quality=1000)
+    img = img.resize((int(R + p) + 1, int(R + p) + 1), Image.ANTIALIAS)
+    img.save(name,subsampling=0, quality=100)
+    return 0
 
 
 def get(brackets):

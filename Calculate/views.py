@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from Polygon import polygon
+from CheckBrackets import check
 import subprocess
 import time
 
@@ -12,22 +13,25 @@ def index(request):
         context['struct'] = request.POST.get('struct', 'bin')
 
         name = 'static/gen-img/%i.jpg' % int(time.time())
-
-        if context['struct'] == 'bin':
-            if context['choice'] == 'on':
-                code = subprocess.call(['Cat_Br_Tr_Num.exe', context['brackets'], 'Calculate/' + name])
-            else:
-                code = subprocess.call(['Cat_Br_Tr.exe', context['brackets'], 'Calculate/' + name])
-        elif context['struct'] == 'root':
-            if context['choice'] == 'on':
-                code = subprocess.call(['Cat_Tree_Win_Num.exe', context['brackets'], 'Calculate/' + name])
-            else:
-                code = subprocess.call(['Cat_Tree_Win.exe', context['brackets'], 'Calculate/' + name])
-        elif context['struct'] == 'table':
-            code = subprocess.call(['Cat_Jung.exe', context['brackets'], 'Calculate/' + name])
-        elif context['struct'] == 'poly':
-            code = polygon(context['brackets'], 'Calculate/' + name)
-            code=0
+        code = check(context['brackets'])
+        if context['struct'] == 'poly' and code == 0:
+            try:
+                polygon(context['brackets'], 'Calculate/' + name, context['choice'])
+            except MemoryError as e:
+                context['error'] = "Too long request. Memory fail."
+        elif code == 0:
+            if context['struct'] == 'bin':
+                if context['choice'] == 'on':
+                    code = subprocess.call(['Cat_Br_Tr_Num.exe', context['brackets'], 'Calculate/' + name])
+                else:
+                    code = subprocess.call(['Cat_Br_Tr.exe', context['brackets'], 'Calculate/' + name])
+            elif context['struct'] == 'root':
+                if context['choice'] == 'on':
+                    code = subprocess.call(['Cat_Tree_Win_Num.exe', context['brackets'], 'Calculate/' + name])
+                else:
+                    code = subprocess.call(['Cat_Tree_Win.exe', context['brackets'], 'Calculate/' + name])
+            elif context['struct'] == 'table':
+                code = subprocess.call(['Cat_Jung.exe', context['brackets'], 'Calculate/' + name])
 
         if code == 0:
             context['img'] = name

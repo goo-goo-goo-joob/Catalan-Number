@@ -39,8 +39,7 @@
     </p>
 
     <label>
-        <input type="checkbox" id="fl" name="flag" {% if struct == "table" %}disabled="disabled"{% endif %}
-               {% if struct == "poly" %}disabled="disabled"{% endif %}
+        <input type="checkbox" id="fl" name="flag"
                {% if choice == "on" %}checked{% endif %}> Enable numbering
     </label>
     <input type="submit" value="Send">
@@ -50,9 +49,6 @@
             if (document.getElementById('table').checked) {
                 //target.checked = false;
                 //target.disabled = true;
-                target.parentNode.hidden = true;
-            }
-            else if (document.getElementById('poly').checked) {
                 target.parentNode.hidden = true;
             }
             else
