@@ -27,8 +27,12 @@
         </div>
 
         <div>
-            <input type="radio" name="struct" id="struct" value="table"
+            <input type="radio" name="struct" id="table" value="table"
                     {% if struct == "table" %} checked {% endif %}>Table Jung
+        </div>
+        <div>
+            <input type="radio" name="struct" id="poly" value="poly"
+                    {% if struct == "poly" %} checked {% endif %}>Polygon
         </div>
 
     </fieldset>
@@ -36,15 +40,19 @@
 
     <label>
         <input type="checkbox" id="fl" name="flag" {% if struct == "table" %}disabled="disabled"{% endif %}
+               {% if struct == "poly" %}disabled="disabled"{% endif %}
                {% if choice == "on" %}checked{% endif %}> Enable numbering
     </label>
     <input type="submit" value="Send">
     <script>
         function reDraw() {
             let target = document.getElementById('fl');
-            if (document.getElementById('struct').checked) {
+            if (document.getElementById('table').checked) {
                 //target.checked = false;
                 //target.disabled = true;
+                target.parentNode.hidden = true;
+            }
+            else if (document.getElementById('poly').checked) {
                 target.parentNode.hidden = true;
             }
             else

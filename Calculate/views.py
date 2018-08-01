@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from Polygon import polygon
 import subprocess
 import time
 
@@ -10,7 +11,7 @@ def index(request):
         context['choice'] = request.POST.get('flag', 'off')
         context['struct'] = request.POST.get('struct', 'bin')
 
-        name = 'static/gen-img/%i.png' % int(time.time())
+        name = 'static/gen-img/%i.jpg' % int(time.time())
 
         if context['struct'] == 'bin':
             if context['choice'] == 'on':
@@ -24,6 +25,9 @@ def index(request):
                 code = subprocess.call(['Cat_Tree_Win.exe', context['brackets'], 'Calculate/' + name])
         elif context['struct'] == 'table':
             code = subprocess.call(['Cat_Jung.exe', context['brackets'], 'Calculate/' + name])
+        elif context['struct'] == 'poly':
+            code = polygon(context['brackets'], 'Calculate/' + name)
+            code=0
 
         if code == 0:
             context['img'] = name
