@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <title>Catalan calculator</title>
+</head>
+<body>
+<form action="" method="post" onchange="reDraw()">
+    {% csrf_token %}
+    <p class="container">
+    <div class='wrapper text-center'>
+        <div class="btn-group btn-group-lg">
+            <div class="btn-group btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="what" value="br" autocomplete="off"> Bracket structure
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="what" value="bin" autocomplete="off" disabled> Binary tree
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="what" value="root" autocomplete="off" disabled> Rooted tree
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="what" value="table" autocomplete="off" disabled> Table Jung
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="what" value="poly" autocomplete="off" disabled> Polygon
+                </label>
+            </div>
+        </div>
+    </div>
+    </p>
+    <div class="container">
+        <div class="form-group">
+            <input type="text" name="brackets" class="form-control" placeholder="Enter the correct bracket structure:"
+                   id="brackets" value="{{ brackets }}" required>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class='wrapper text-center'>
+            <div class="btn-group btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
+                <label class="btn btn-secondary {% if struct == "br" %}
+                           active {% endif %}">
+                    <input type="radio" name="struct" id="br" value="br" autocomplete="off" {% if what == "br" %}
+                           disabled {% endif %}> To bracket
+                    structure
+                </label>
+                <label class="btn btn-secondary {% if struct == "bin" %}
+                       active {% endif %}">
+                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off"> To binary tree
+                </label>
+                <label class="btn btn-secondary{% if struct == "root" %}
+                           active {% endif %}">
+                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To rooted tree
+                </label>
+                <label class="btn btn-secondary{% if struct == "table" %}
+                           active {% endif %}">
+                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To table Jung
+                </label>
+                <label class="btn btn-secondary{% if struct == "poly" %}
+                           active {% endif %}">
+                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To polygon
+                </label>
+            </div>
+            <div class="btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
+                <label class="btn btn-secondary {% if choice == "on" %}active{% endif %}">
+                    <input type="checkbox" checked autocomplete="off" id="fl" name="flag"> Enable numbering
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class='wrapper text-center'>
+            <input type="submit" class="btn btn-secondary btn-lg" value="Send">
+        </div>
+    </div>
+
+    <script>
+        function reDraw() {
+            let target = document.getElementById('fl');
+            if (document.getElementById('table').checked) {
+                target.parentNode.hidden = true;
+            }
+            else
+                target.parentNode.hidden = false;
+        }
+
+        document.addEventListener("DOMContentLoaded", reDraw);
+    </script>
+
+</form>
+
+{% if img %}
+    <img src="{{ img }}" class="mx-auto d-block">
+{% endif %}
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+</body>
+</html>
