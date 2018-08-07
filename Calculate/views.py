@@ -81,11 +81,11 @@ def index_new(request):
         if code == 0:
             context['img'] = name
         elif code == 1:
-            context['error'] = 'Error: incorrect bracket structure.'
+            context['error'] = 'Incorrect bracket structure.'
         elif code == 2:
-            context['error'] = 'Error: invalid symbol.'
+            context['error'] = 'Invalid symbol.'
         elif code == 3:
-            context['error'] = 'Error: unable to open file.'
+            context['error'] = 'Unable to open file.'
         elif code == 4:
             context['error'] = "Too long request. Memory fail."
         else:

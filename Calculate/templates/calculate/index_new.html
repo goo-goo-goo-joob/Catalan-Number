@@ -12,76 +12,70 @@
 <body>
 <form action="" method="post" onchange="reDraw()">
     {% csrf_token %}
-    <p class="container">
-    <div class='wrapper text-center'>
-        <div class="btn-group btn-group-lg">
-            <div class="btn-group btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="what" value="br" autocomplete="off"> Bracket structure
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="what" value="bin" autocomplete="off" disabled> Binary tree
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="what" value="root" autocomplete="off" disabled> Rooted tree
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="what" value="table" autocomplete="off" disabled> Table Jung
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="what" value="poly" autocomplete="off" disabled> Polygon
-                </label>
+
+    <div class="container">
+        <div class="form-group row p-5">
+            <div class="col-sm-10">
+                <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:"
+                       id="brackets" value="{{ brackets }}" required>
+                <div class="form-control-feedback">{% if error %}
+                    <div class="alert alert-danger " align="center">
+                        <strong>Error!</strong> {{ error }}
+                    </div>
+                {% endif %}</div>
+            </div>
+            <div class="btn-group-toggle col-sm-2">
+                <input type="submit" class="btn btn-success btn-block" value="Send">
+            </div>
+            <div class="alert alert-info alert-dismissible fade show col-sm-10">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Info.</strong> A string of parentheses is balanced if there are an equal number of open and
+                closed
+                parentheses and a number of open parenthesis is greater than or equal to a closed parenthesis in every
+                position of the string.
             </div>
         </div>
     </div>
-    </p>
-    <div class="container">
-        <div class="form-group">
-            <input type="text" name="brackets" class="form-control" placeholder="Enter the correct bracket structure:"
-                   id="brackets" value="{{ brackets }}" required>
-        </div>
-    </div>
+
 
     <div class="container">
-        <div class='wrapper text-center'>
-            <div class="btn-group btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
-                <label class="btn btn-secondary {% if struct == "br" %}
-                           active {% endif %}">
-                    <input type="radio" name="struct" id="br" value="br" autocomplete="off" {% if what == "br" %}
-                           disabled {% endif %}> To bracket
-                    structure
-                </label>
-                <label class="btn btn-secondary {% if struct == "bin" %}
+        <div class="form-group row">
+            <div class="col-sm-1"></div>
+            <div class="btn-group btn-group-toggle col-sm-6" data-toggle="buttons">
+                <label class="btn btn-info{% if struct == "bin" %}
                        active {% endif %}">
-                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off"> To binary tree
+                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" {% if struct == "bin" %}
+                           checked {% endif %}> To binary tree
                 </label>
-                <label class="btn btn-secondary{% if struct == "root" %}
+                <label class="btn btn-info{% if struct == "root" %}
                            active {% endif %}">
-                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To rooted tree
+                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"
+                            {% if struct == "root" %}
+                           checked {% endif %}> To rooted tree
                 </label>
-                <label class="btn btn-secondary{% if struct == "table" %}
+                <label class="btn btn-info{% if struct == "poly" %}
                            active {% endif %}">
-                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To table Jung
+                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"
+                            {% if struct == "poly" %}
+                           checked {% endif %}> To polygon
                 </label>
-                <label class="btn btn-secondary{% if struct == "poly" %}
+                <label class="btn btn-info{% if struct == "table" %}
                            active {% endif %}">
-                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To polygon
+                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"
+                            {% if struct == "table" %}
+                           checked {% endif %}> To table Jung
                 </label>
             </div>
-            <div class="btn-group-toggle mb-2 mr-sm-2" data-toggle="buttons">
-                <label class="btn btn-secondary {% if choice == "on" %}active{% endif %}">
-                    <input type="checkbox" checked autocomplete="off" id="fl" name="flag"> Enable numbering
+            <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
+                <label class="btn btn-light {% if choice == "on" %}active{% endif %}">
+                    <input type="checkbox" autocomplete="off" id="fl" name="flag"
+                           {% if choice == "on" %}checked{% endif %}> Enable numbering
                 </label>
             </div>
+            <div class="col-sm-3"></div>
         </div>
     </div>
 
-
-    <div class="container">
-        <div class='wrapper text-center'>
-            <input type="submit" class="btn btn-secondary btn-lg" value="Send">
-        </div>
-    </div>
 
     <script>
         function reDraw() {
@@ -102,9 +96,6 @@
     <img src="{{ img }}" class="mx-auto d-block">
 {% endif %}
 
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
 
 </body>
 </html>
