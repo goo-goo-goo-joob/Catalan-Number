@@ -10,19 +10,18 @@
     <title>Catalan calculator</title>
 </head>
 <body>
-<form action="" method="post" onchange="reDraw()">
+<form action="" method="post" onchange="reDraw()" id="form">
     {% csrf_token %}
 
     <div class="container">
         <div class="form-group row p-5">
             <div class="col-sm-10">
-                <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:"
-                       id="brackets" value="{{ brackets }}" required>
-                <div class="form-control-feedback">{% if error %}
-                    <div class="alert alert-danger " align="center">
-                        <strong>Error!</strong> {{ error }}
+                <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:" id="brackets" required>
+                <div class="form-control-feedback">
+                    <div id="alert" class="alert alert-danger d-none" align="center">
+
                     </div>
-                {% endif %}</div>
+                </div>
             </div>
             <div class="btn-group-toggle col-sm-2">
                 <input type="submit" class="btn btn-success btn-block" value="Send">
@@ -42,34 +41,22 @@
         <div class="form-group row">
             <div class="col-sm-1"></div>
             <div class="btn-group btn-group-toggle col-sm-6" data-toggle="buttons">
-                <label class="btn btn-info{% if struct == "bin" %}
-                       active {% endif %}">
-                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" {% if struct == "bin" %}
-                           checked {% endif %}> To binary tree
+                <label class="btn btn-info active">
+                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" checked> To binary tree
                 </label>
-                <label class="btn btn-info{% if struct == "root" %}
-                           active {% endif %}">
-                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"
-                            {% if struct == "root" %}
-                           checked {% endif %}> To rooted tree
+                <label class="btn btn-info">
+                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To rooted tree
                 </label>
-                <label class="btn btn-info{% if struct == "poly" %}
-                           active {% endif %}">
-                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"
-                            {% if struct == "poly" %}
-                           checked {% endif %}> To polygon
+                <label class="btn btn-info">
+                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To polygon
                 </label>
-                <label class="btn btn-info{% if struct == "table" %}
-                           active {% endif %}">
-                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"
-                            {% if struct == "table" %}
-                           checked {% endif %}> To table Jung
+                <label class="btn btn-info">
+                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To table Jung
                 </label>
             </div>
             <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
-                <label class="btn btn-light {% if choice == "on" %}active{% endif %}">
-                    <input type="checkbox" autocomplete="off" id="fl" name="flag"
-                           {% if choice == "on" %}checked{% endif %}> Enable numbering
+                <label class="btn btn-light">
+                    <input type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
                 </label>
             </div>
             <div class="col-sm-3"></div>
@@ -80,21 +67,36 @@
     <script>
         function reDraw() {
             let target = document.getElementById('fl');
-            if (document.getElementById('table').checked) {
-                target.parentNode.hidden = true;
-            }
-            else
-                target.parentNode.hidden = false;
+            target.parentNode.hidden = !!document.getElementById('table').checked;
         }
 
         document.addEventListener("DOMContentLoaded", reDraw);
+
+        // this is the id of the form
+        $("#form").submit(function (e) {
+            let form = $(this);
+            $.ajax({
+                type: "POST",
+                url: '',
+                data: form.serialize(), // serializes the form's elements.
+                success: function (data) {
+                    if (data.result) {
+                        $('#img-result').attr('src', data.img);
+                        $('#alert').addClass('d-none');
+                    }
+                    else
+                        $('#alert').removeClass('d-none').html('<strong>Error!</strong>');
+                }
+            });
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+        });
     </script>
 
 </form>
 
-{% if img %}
-    <img src="{{ img }}" class="mx-auto d-block">
-{% endif %}
+
+<img src="" id="img-result" class="mx-auto d-block">
 
 
 </body>
