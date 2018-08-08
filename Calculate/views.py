@@ -61,6 +61,7 @@ def index_new(request):
 
         name = 'static/gen-img/%i.jpg' % int(time.time())
         code = check(brackets)
+        error = ''
         if struct == 'poly' and code == 0:
             try:
                 polygon(brackets, 'Calculate/' + name, choice)
@@ -79,7 +80,15 @@ def index_new(request):
                     code = subprocess.call(['Cat_Tree_Win.exe', brackets, 'Calculate/' + name])
             elif struct == 'table':
                 code = subprocess.call(['Cat_Jung.exe', brackets, 'Calculate/' + name])
-        result = {"result": code == 0, "img": name}
+        if code == 1:
+            error = 'Incorrect bracket structure.'
+        elif code == 2:
+            error = 'Invalid symbol.'
+        elif code == 3:
+            error = 'Unable to open file.'
+        elif code == 4:
+            error = "Too long request. Memory fail."
+        result = {"result": code == 0,"error": error, "img": name}
         return JsonResponse(result, safe=False)
     else:
         return render(request, 'calculate/index_new.html', )

@@ -4,63 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <title>Catalan calculator</title>
+    <style>
+        .prokrutka {
+
+            background: #fff; /* цвет фона, белый */
+            overflow-x: auto; /* прокрутка по вертикали */
+            overflow-y: hidden; /* прокрутка по вертикали */
+        }
+
+        #style-1::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar {
+            width: 30px;
+            background-color: #F5F5F5;
+        }
+
+        #style-1::-webkit-scrollbar-thumb {
+            border-radius: 12px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+            background-color: #17a2b8;
+        }
+    </style>
 </head>
 <body>
 <form action="" method="post" onchange="reDraw()" id="form">
     {% csrf_token %}
-
-    <div class="container">
-        <div class="form-group row p-5">
-            <div class="col-sm-10">
-                <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:" id="brackets" required>
-                <div class="form-control-feedback">
-                    <div id="alert" class="alert alert-danger d-none" align="center">
-
-                    </div>
+    <h1 class="display-4 text-center" style="
+    font-family: monospace;
+    /* font-size: 24px; */
+    font-style: normal;
+    font-variant: normal;
+    /* font-weight: 700; */
+    /* line-height: 26.4px; */
+    background-color: #d1ecf1;
+    padding:  25px 0;
+    /* border-color:  red; */
+    /* text-shadow: 0 0 8px #00aef5; */
+    /* color: #10209e; */
+">Catalan Calculator <i class="fa fa-calculator" style="font-size:36px"></i></h1>
+    <div class="form-group row p-2">
+        <div class="col-sm-10">
+            <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:"
+                   id="brackets" required>
+            <div class="form-control-feedback">
+                <div id="alert" class="alert alert-danger d-none" align="center">
                 </div>
             </div>
-            <div class="btn-group-toggle col-sm-2">
-                <input type="submit" class="btn btn-success btn-block" value="Send">
-            </div>
-            <div class="alert alert-info alert-dismissible fade show col-sm-10">
+            <div class="alert alert-info alert-dismissible fade show" align="center">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Info.</strong> A string of parentheses is balanced if there are an equal number of open and
                 closed
-                parentheses and a number of open parenthesis is greater than or equal to a closed parenthesis in every
+                parentheses and a number of open parenthesis is greater than or equal to a closed parenthesis in
+                every
                 position of the string.
             </div>
         </div>
+        <div class="btn-group-toggle col-sm-2">
+            <button type="submit" class="btn btn-success btn-block"  id="load"
+                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Calculating...">CALCULATE  <i class="fa fa-calculator" style="font-size:18px"></i></button>
+        </div>
+
     </div>
 
 
-    <div class="container">
-        <div class="form-group row">
-            <div class="col-sm-1"></div>
-            <div class="btn-group btn-group-toggle col-sm-6" data-toggle="buttons">
-                <label class="btn btn-info active">
-                    <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" checked> To binary tree
-                </label>
-                <label class="btn btn-info">
-                    <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To rooted tree
-                </label>
-                <label class="btn btn-info">
-                    <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To polygon
-                </label>
-                <label class="btn btn-info">
-                    <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To table Jung
-                </label>
-            </div>
-            <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
-                <label class="btn btn-light">
-                    <input type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
-                </label>
-            </div>
-            <div class="col-sm-3"></div>
+    <div class="form-group row p-2">
+        <div class="btn-group btn-group-toggle col-sm-10" data-toggle="buttons">
+            <label class="btn btn-info btn-lg active col-sm-4">
+                <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" checked> To Binary Tree
+            </label>
+            <label class="btn btn-info btn-lg col-sm-4">
+                <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To Rooted Tree
+            </label>
+            <label class="btn btn-info btn-lg col-sm-4">
+                <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To Polygon
+            </label>
+            <label class="btn btn-info btn-lg col-sm-4">
+                <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To Table Jung
+            </label>
         </div>
+        <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
+            <label class="btn btn-light btn-lg btn-block">
+                <input type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
+            </label>
+        </div>
+
+
     </div>
 
 
@@ -69,6 +106,28 @@
             let target = document.getElementById('fl');
             target.parentNode.hidden = !!document.getElementById('table').checked;
         }
+
+        $(document).ready(function() {
+            $('#load').on('click', function() {
+                var $this = $(this);
+                var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> Calculating...';
+                if ($(this).html() !== loadingText) {
+                    $this.data('original-text', $(this).html());
+                    $this.html(loadingText);
+                }
+                setTimeout(function() {
+                    $this.html($this.data('original-text'));
+                }, 0);
+            });
+            $.ajax({
+                type: "POST",
+                url: '',
+                data: form.serialize(), // serializes the form's elements.
+                complete: function(){
+
+                }
+            })
+        })
 
         document.addEventListener("DOMContentLoaded", reDraw);
 
@@ -84,8 +143,10 @@
                         $('#img-result').attr('src', data.img);
                         $('#alert').addClass('d-none');
                     }
-                    else
-                        $('#alert').removeClass('d-none').html('<strong>Error!</strong>');
+                    else {
+                        $('#img-result').attr('src', "");
+                        $('#alert').removeClass('d-none').html("<strong>Error!</strong> " + data.error);
+                    }
                 }
             });
 
@@ -95,9 +156,9 @@
 
 </form>
 
-
-<img src="" id="img-result" class="mx-auto d-block">
-
+<div class="prokrutka" id="style-1">
+    <img src="" id="img-result" class="mx-auto d-block">
+</div>
 
 </body>
 </html>
