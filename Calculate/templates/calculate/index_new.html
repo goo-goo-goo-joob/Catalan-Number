@@ -69,8 +69,8 @@
             </div>
         </div>
         <div class="btn-group-toggle col-sm-2">
-            <button type="submit" class="btn btn-success btn-block"  id="load"
-                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Calculating...">CALCULATE  <i class="fa fa-calculator" style="font-size:18px"></i></button>
+            <button type="submit" class="btn btn-success btn-block" id="load"
+            >CALCULATE <i class="fa fa-calculator" style="font-size:18px"></i></button>
         </div>
 
     </div>
@@ -107,33 +107,23 @@
             target.parentNode.hidden = !!document.getElementById('table').checked;
         }
 
-        $(document).ready(function() {
-            $('#load').on('click', function() {
+        $(document).ready(function () {
+            $('#load').on('click', function () {
                 var $this = $(this);
                 var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> Calculating...';
                 if ($(this).html() !== loadingText) {
-                    $this.data('original-text', $(this).html());
                     $this.html(loadingText);
                 }
-                setTimeout(function() {
-                    $this.html($this.data('original-text'));
-                }, 0);
             });
-            $.ajax({
-                type: "POST",
-                url: '',
-                data: form.serialize(), // serializes the form's elements.
-                complete: function(){
 
-                }
-            })
-        })
+        });
 
         document.addEventListener("DOMContentLoaded", reDraw);
 
         // this is the id of the form
         $("#form").submit(function (e) {
             let form = $(this);
+            let load = $("#load");
             $.ajax({
                 type: "POST",
                 url: '',
@@ -147,6 +137,10 @@
                         $('#img-result').attr('src', "");
                         $('#alert').removeClass('d-none').html("<strong>Error!</strong> " + data.error);
                     }
+                },
+                complete: function () {
+                    var originalText = 'CALCULATE  <i class="fa fa-calculator" style="font-size:18px"></i>';
+                    load.html(originalText);
                 }
             });
 
