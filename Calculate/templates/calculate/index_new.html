@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>Catalan calculator</title>
+    <title>Catalan Calculator</title>
+    <link rel="icon" href="{% static "img/favicon.ico" %}" type="image/x-icon">
     <style>
         .prokrutka {
 
@@ -33,6 +36,8 @@
             -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
             background-color: #17a2b8;
         }
+
+
     </style>
 </head>
 <body>
@@ -47,7 +52,7 @@
     /* line-height: 26.4px; */
     background-color: #d1ecf1;
     padding:  25px 0;
-    /* border-color:  red; */
+    border-color: #bee5eb;
     /* text-shadow: 0 0 8px #00aef5; */
     /* color: #10209e; */
 ">Catalan Calculator <i class="fa fa-calculator" style="font-size:36px"></i></h1>
@@ -92,7 +97,7 @@
             </label>
         </div>
         <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
-            <label class="btn btn-light btn-lg btn-block">
+            <label class=" btn btn-outline-info btn-lg btn-block" >
                 <input type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
             </label>
         </div>
@@ -107,23 +112,16 @@
             target.parentNode.hidden = !!document.getElementById('table').checked;
         }
 
-        $(document).ready(function () {
-            $('#load').on('click', function () {
-                var $this = $(this);
-                var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> Calculating...';
-                if ($(this).html() !== loadingText) {
-                    $this.html(loadingText);
-                }
-            });
-
-        });
-
         document.addEventListener("DOMContentLoaded", reDraw);
 
         // this is the id of the form
         $("#form").submit(function (e) {
             let form = $(this);
             let load = $("#load");
+            var loadingText = '<i class="fa fa-circle-o-notch fa-spin"></i> Calculating...';
+            if (load.html() !== loadingText) {
+                load.html(loadingText);
+            }
             $.ajax({
                 type: "POST",
                 url: '',
