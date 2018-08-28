@@ -64,22 +64,22 @@ def index_new(request):
         error = ''
         if struct == 'poly' and code == 0:
             try:
-                polygon(brackets, 'Calculate/' + name, choice)
+                polygon(brackets, name, choice)
             except MemoryError as e:
                 code = 4
         elif code == 0:
             if struct == 'bin':
                 if choice == 'on':
-                    code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, 'Calculate/' + name])
+                    code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, name])
                 else:
-                    code = subprocess.call(['Cat_Br_Tr.exe', brackets, 'Calculate/' + name])
+                    code = subprocess.call(['Cat_Br_Tr.exe', brackets, name])
             elif struct == 'root':
                 if choice == 'on':
-                    code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, 'Calculate/' + name])
+                    code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
                 else:
-                    code = subprocess.call(['Cat_Tree_Win.exe', brackets, 'Calculate/' + name])
+                    code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
             elif struct == 'table':
-                code = subprocess.call(['Cat_Jung.exe', brackets, 'Calculate/' + name])
+                code = subprocess.call(['Cat_Jung.exe', brackets, name])
         if code == 1:
             error = 'Incorrect bracket structure.'
         elif code == 2:
