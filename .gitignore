@@ -36,3 +36,20 @@ Cat_Tree_Win/Cat_Tree_Win/Debug/
 Cat_Tree_Win/\.vs/
 
 Cat_Tree_Linux/\.vs/
+
+__pycache__/
+
+Cat_Jung/\.vs/
+
+Cat_Jung/Debug/
+
+Cat_Jung/Cat/Debug/
+
+Cat_Tree_Linux/Cat_Tree/bin
+
+Cat_Tree_Linux/Cat_Tree/obj
+
+Cat_Tree_Linux/Cat_Tree/readme
+
+Cat_Tree_Win/Debug
+
