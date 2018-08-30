@@ -3,29 +3,7 @@
 #include<cstdio>
 #include<locale.h>
 #include<stack>
-#pragma warning(disable:4996)
 using namespace std;
-void check(char* br) {
-	int i, j = 0;
-	for (i = 0; br[i] != 0;i++) {
-		if (br[i] == '(')
-			j++;
-		else if (br[i] == ')')
-			j--;
-		else {
-			printf("Error: invalid symbol");
-			exit(2);
-		}
-		if (j < 0) {
-			printf("Error: incorrect bracket structure");
-			exit(1);
-		}
-	}
-	if (j != 0) {
-		printf("Error: incorrect bracket structure");
-		exit(1);
-	}
-}
 void print_dot_st(FILE* f, char* brackets, int key) {
 	stack  <int> st;
 	int prev;
@@ -53,7 +31,7 @@ void print_dot(FILE* f, char* brackets) {
 }
 int main(int argc, char* argv[]) {
 	char command[512];
-	strcpy(command, "\"\"%programfiles(x86)%/Graphviz2.38/bin/dot.exe\"\" -Tpng root_tree.dot -o ");
+	strcpy(command, "dot -Tpng root_tree.dot -o ~/");
 	if (argc == 3)
 	{
 		strcat(command, argv[2]);
@@ -69,7 +47,6 @@ int main(int argc, char* argv[]) {
 		exit(3);
 	}
 	puts(argv[1]);
-	check(argv[1]);
 	print_dot(f, argv[1]);
 	fclose(f);
 	system(command);
