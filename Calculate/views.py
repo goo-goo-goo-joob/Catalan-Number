@@ -75,7 +75,10 @@ def index_new(request):
                     code = subprocess.call(['Cat_Br_Tr.exe', brackets, name])
             elif struct == 'root':
                 if choice == 'on':
-                    code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
+                    if platform.system() == 'Linux':
+                        code = subprocess.call(['./Cat_Tree_Win_Num.o', brackets, name])
+                    else:
+                        code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
                 else:
                     if platform.system() == 'Linux':
                         code = subprocess.call(['./Cat_Tree_Win.o', brackets, name])
@@ -83,7 +86,10 @@ def index_new(request):
                         code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
 
             elif struct == 'table':
-                code = subprocess.call(['Cat_Jung.exe', brackets, name])
+                if platform.system() == 'Linux':
+                    code = subprocess.call(['./Cat_Jung.o', brackets, name])
+                else:
+                    code = subprocess.call(['Cat_Jung.exe', brackets, name])
         if code == 1:
             error = 'Incorrect bracket structure.'
         elif code == 2:

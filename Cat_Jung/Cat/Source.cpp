@@ -3,7 +3,7 @@
 #include<cstdio>
 #include<locale.h>
 #include<stack>
-#pragma warning(disable:4996)
+#include <string.h>
 using namespace std;
 int check(char* br) {
 	int i, j = 0;
@@ -70,7 +70,7 @@ void print_dot(FILE* f, int* jung1, int* jung2, int n) {
 int main(int argc, char* argv[]) {
 	char command[512];
 	int *jung1, *jung2, n;
-	strcpy(command, "\"\"%programfiles(x86)%/Graphviz2.38/bin/dot.exe\"\" -Tpng jung.dot -o ");
+	strcpy(command, "dot -Tpng root_tree.dot -o ");
 	if (argc == 3)
 	{
 		strcat(command, argv[2]);
