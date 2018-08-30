@@ -32,7 +32,7 @@ void print_dot(FILE* f, char* brackets) {
 }
 int main(int argc, char* argv[]) {
 	char command[512];
-	strcpy(command, "dot -Tpng root_tree.dot -o ~/");
+	strcpy(command, "dot -Tpng root_tree.dot -o ");
 	if (argc == 3)
 	{
 		strcat(command, argv[2]);

@@ -1,6 +1,6 @@
 import subprocess
 import time
-
+import platform
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -77,7 +77,11 @@ def index_new(request):
                 if choice == 'on':
                     code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
                 else:
-                    code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
+                    if platform.system() == 'Linux':
+                        code = subprocess.call(['./Cat_Tree_Win.o', "'%s'" % brackets, name])
+                    else:
+                        code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
+
             elif struct == 'table':
                 code = subprocess.call(['Cat_Jung.exe', brackets, name])
         if code == 1:
@@ -88,7 +92,7 @@ def index_new(request):
             error = 'Unable to open file.'
         elif code == 4:
             error = "Too long request. Memory fail."
-        result = {"result": code == 0,"error": error, "img": name}
+        result = {"result": code == 0, "error": error, "img": name}
         return JsonResponse(result, safe=False)
     else:
         return render(request, 'calculate/index_new.html', )
