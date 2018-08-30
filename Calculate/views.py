@@ -65,8 +65,8 @@ def index_new(request):
         if struct == 'poly' and code == 0:
             try:
                 polygon(brackets, name, choice)
-            except MemoryError as e:
-                code = 4
+            except Exception as e:
+                error = str(e)
         elif code == 0:
             if struct == 'bin':
                 if choice == 'on':
@@ -102,8 +102,6 @@ def index_new(request):
             error = 'Invalid symbol.'
         elif code == 3:
             error = 'Unable to open file.'
-        elif code == 4:
-            error = "Too long request. Memory fail."
         result = {"result": code == 0, "error": error, "img": name}
         return JsonResponse(result, safe=False)
     else:
