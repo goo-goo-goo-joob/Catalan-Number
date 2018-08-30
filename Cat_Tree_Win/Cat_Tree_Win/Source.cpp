@@ -3,6 +3,7 @@
 #include<cstdio>
 #include<locale.h>
 #include<stack>
+#include <string.h>
 using namespace std;
 void print_dot_st(FILE* f, char* brackets, int key) {
 	stack  <int> st;
