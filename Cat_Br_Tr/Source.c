@@ -79,7 +79,7 @@ void deltree(tnode *tree) {
 int  main(int argc, char* argv[]) {
 
 	char command[512];
-	strcpy(command, "\"\"%programfiles(x86)%/Graphviz2.38/bin/dot.exe\"\" -Tpng tree.dot -o ");
+	strcpy(command, "dot -Tpng tree.dot -o ");
 	if (argc == 3)
 	{
 		strcat(command, argv[2]);
