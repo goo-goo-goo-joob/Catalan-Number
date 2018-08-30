@@ -1,1 +1,0 @@
-g++ -o "/home/pi/projects/Cat_Tree/bin/x64/Debug/Cat_Tree.out" -Wl,--no-undefined -Wl,-z,relro -Wl,-z,now -Wl,-z,noexecstack /home/pi/projects/Cat_Tree/obj/x64/Debug/main.o
