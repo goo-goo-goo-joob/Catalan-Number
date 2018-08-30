@@ -78,7 +78,7 @@ def index_new(request):
                     code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
                 else:
                     if platform.system() == 'Linux':
-                        code = subprocess.call(['./Cat_Tree_Win.o', "'%s'" % brackets, name])
+                        code = subprocess.call(['./Cat_Tree_Win.o', brackets, name])
                     else:
                         code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
 

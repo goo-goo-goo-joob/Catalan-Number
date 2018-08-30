@@ -26,7 +26,7 @@ void print_dot(FILE* f, char* brackets) {
 	fprintf(f, "graph {\n");
 	fprintf(f, "	nodesep=0.6\n");
 	fprintf(f, "	rankdir=BT\n");
-	fprintf(f, "	node [shape = circle, fontcolor=\"white\"];\n");//fontcolor=\"white\"
+	fprintf(f, "	node [shape = circle];\n");//fontcolor=\"white\"
 	print_dot_st(f, brackets, key);
 	fprintf(f, "}\n");
 }
