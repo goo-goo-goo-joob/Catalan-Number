@@ -70,9 +70,15 @@ def index_new(request):
         elif code == 0:
             if struct == 'bin':
                 if choice == 'on':
-                    code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, name])
+                    if platform.system() == 'Linux':
+                        code = subprocess.call(['./Cat_Br_Tr_Num.o', brackets, name])
+                    else:
+                        code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, name])
                 else:
-                    code = subprocess.call(['Cat_Br_Tr.exe', brackets, name])
+                    if platform.system() == 'Linux':
+                        code = subprocess.call(['./Cat_Br_Tr.o', brackets, name])
+                    else:
+                        code = subprocess.call(['Cat_Br_Tr.exe', brackets, name])
             elif struct == 'root':
                 if choice == 'on':
                     if platform.system() == 'Linux':

@@ -74,7 +74,7 @@ void printTree(FILE* f, tnode* tree) {
 void print_dot(FILE* f, tnode* tree) {
 	fprintf(f, "graph {\n");
 	fprintf(f, "	nodesep=0.6\n");
-	fprintf(f, "	node [shape = circle, fontcolor=\"white\"];\n");//fontcolor=\"white\"
+	fprintf(f, "	node [shape = circle];\n");//fontcolor=\"white\"
 	fprintf(f, "	%d;\n", tree->key);
 	printTree(f, tree);
 	fprintf(f, "}\n");
