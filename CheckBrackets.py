@@ -1,4 +1,6 @@
 def check(brackets):
+    if len(brackets)>100:
+        return 4
     j = 0
     for i in range(len(brackets)):
         if brackets[i] == '(':
