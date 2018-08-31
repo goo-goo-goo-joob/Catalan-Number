@@ -4,56 +4,28 @@ import platform
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from CheckBrackets import check
-from Polygon import polygon
+from .scripts import check, polygon, callPolygon, callBinTree, callRootTree, callTableJung
 
 
 def index_new(request):
     if request.method == 'POST':
 
         brackets = request.POST.get('brackets', None)
-        choice = request.POST.get('flag', 'off')
+        choice = request.POST.get('flag', 'off') == 'on'
         struct = request.POST.get('struct', 'bin')
         name = 'static/gen-img/%i.jpg' % int(time.time())
-
-        code = check(brackets)
         error = ''
-        if struct == 'poly' and code == 0:
-            if platform.system() == 'Linux':
-                polygon(brackets, name, choice)
-            else:
-                polygon(brackets, 'Calculate/' + name, choice)
-
-        elif code == 0:
-            if struct == 'bin':
-                if choice == 'on':
-                    if platform.system() == 'Linux':
-                        code = subprocess.call(['./Cat_Br_Tr_Num.o', brackets, name])
-                    else:
-                        code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, 'Calculate/' + name])
-                else:
-                    if platform.system() == 'Linux':
-                        code = subprocess.call(['./Cat_Br_Tr.o', brackets, name])
-                    else:
-                        code = subprocess.call(['Cat_Br_Tr.exe', brackets, 'Calculate/' + name])
+        code = check(brackets)
+        if code == 0:
+            if struct == 'poly':
+                callPolygon(brackets, name, choice)
+            elif struct == 'bin':
+                callBinTree(brackets, name, choice)
             elif struct == 'root':
-                if choice == 'on':
-                    if platform.system() == 'Linux':
-                        code = subprocess.call(['./Cat_Tree_Win_Num.o', brackets, name])
-                    else:
-                        code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, 'Calculate/' + name])
-                else:
-                    if platform.system() == 'Linux':
-                        code = subprocess.call(['./Cat_Tree_Win.o', brackets, name])
-                    else:
-                        code = subprocess.call(['Cat_Tree_Win.exe', brackets, 'Calculate/' + name])
-
+                callRootTree(brackets, name, choice)
             elif struct == 'table':
-                if platform.system() == 'Linux':
-                    code = subprocess.call(['./Cat_Jung.o', brackets, name])
-                else:
-                    code = subprocess.call(['Cat_Jung.exe', brackets, 'Calculate/' + name])
-        if code == 1:
+                callTableJung(brackets, name)
+        elif code == 1:
             error = 'Incorrect bracket structure.'
         elif code == 2:
             error = 'Invalid symbol.'
