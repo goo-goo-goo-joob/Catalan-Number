@@ -1,5 +1,5 @@
 def check(brackets):
-    if len(brackets)>100:
+    if len(brackets) > 80:
         return 4
     j = 0
     for i in range(len(brackets)):

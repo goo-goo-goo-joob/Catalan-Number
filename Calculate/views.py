@@ -14,41 +14,45 @@ def index_new(request):
         brackets = request.POST.get('brackets', None)
         choice = request.POST.get('flag', 'off')
         struct = request.POST.get('struct', 'bin')
-
         name = 'static/gen-img/%i.jpg' % int(time.time())
+
         code = check(brackets)
         error = ''
         if struct == 'poly' and code == 0:
-            polygon(brackets, name, choice)
+            if platform.system() == 'Linux':
+                polygon(brackets, name, choice)
+            else:
+                polygon(brackets, 'Calculate/' + name, choice)
+
         elif code == 0:
             if struct == 'bin':
                 if choice == 'on':
                     if platform.system() == 'Linux':
                         code = subprocess.call(['./Cat_Br_Tr_Num.o', brackets, name])
                     else:
-                        code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, name])
+                        code = subprocess.call(['Cat_Br_Tr_Num.exe', brackets, 'Calculate/' + name])
                 else:
                     if platform.system() == 'Linux':
                         code = subprocess.call(['./Cat_Br_Tr.o', brackets, name])
                     else:
-                        code = subprocess.call(['Cat_Br_Tr.exe', brackets, name])
+                        code = subprocess.call(['Cat_Br_Tr.exe', brackets, 'Calculate/' + name])
             elif struct == 'root':
                 if choice == 'on':
                     if platform.system() == 'Linux':
                         code = subprocess.call(['./Cat_Tree_Win_Num.o', brackets, name])
                     else:
-                        code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, name])
+                        code = subprocess.call(['Cat_Tree_Win_Num.exe', brackets, 'Calculate/' + name])
                 else:
                     if platform.system() == 'Linux':
                         code = subprocess.call(['./Cat_Tree_Win.o', brackets, name])
                     else:
-                        code = subprocess.call(['Cat_Tree_Win.exe', brackets, name])
+                        code = subprocess.call(['Cat_Tree_Win.exe', brackets, 'Calculate/' + name])
 
             elif struct == 'table':
                 if platform.system() == 'Linux':
                     code = subprocess.call(['./Cat_Jung.o', brackets, name])
                 else:
-                    code = subprocess.call(['Cat_Jung.exe', brackets, name])
+                    code = subprocess.call(['Cat_Jung.exe', brackets, 'Calculate/' + name])
         if code == 1:
             error = 'Incorrect bracket structure.'
         elif code == 2:
@@ -56,7 +60,7 @@ def index_new(request):
         elif code == 3:
             error = 'Unable to open file.'
         elif code == 4:
-            error = 'Too long request.'
+            error = 'Too long request. Please, enter no more than 80 parenthesis.'
         result = {"result": code == 0, "error": error, "img": name}
         return JsonResponse(result, safe=False)
     else:

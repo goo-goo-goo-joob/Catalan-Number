@@ -57,48 +57,54 @@
     /* color: #10209e; */
 ">Catalan Calculator <i class="fa fa-calculator" style="font-size:36px"></i></h1>
     <div class="form-group row p-2">
-        <div class="col-sm-10">
+        <div class="col-md-8" style="padding-top: 10px">
             <input type="text" name="brackets" class="form-control" placeholder="Enter the Balanced Parentheses:"
                    id="brackets" required>
             <div class="form-control-feedback">
                 <div id="alert" class="alert alert-danger d-none" align="center">
                 </div>
             </div>
-            <div class="alert alert-info alert-dismissible fade show" align="center">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        <div class="btn-group-toggle col-md-2" style="padding-top: 10px">
+            <button type="submit" class="btn btn-success btn-block" id="load"
+            >CALCULATE <i class="fa fa-calculator" style="font-size:18px"></i></button>
+        </div>
+        <div class="btn-group-toggle col-md-2" style="padding-top: 10px">
+            <button class="btn btn-secondary btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="multiCollapseExample2">Info.</button>
+        </div>
+    </div>
+    <div class="collapse p-2 " id="collapseExample">
+        <div class="card card-body border-secondary">
+            <p class="card-text" align="center">
                 <strong>Info.</strong> A string of parentheses is balanced if there are an equal number of open and
                 closed
                 parentheses and a number of open parenthesis is greater than or equal to a closed parenthesis in
                 every
-                position of the string.
-            </div>
+                position of the string.<br><strong>Example for 3 pairs of parentheses:</strong> ((())), (())(), (()()), ()(()), ()()()
+            </p>
         </div>
-        <div class="btn-group-toggle col-sm-2">
-            <button type="submit" class="btn btn-success btn-block" id="load"
-            >CALCULATE <i class="fa fa-calculator" style="font-size:18px"></i></button>
-        </div>
-
     </div>
 
 
-    <div class="form-group row p-2">
-        <div class="btn-group btn-group-toggle col-sm-10" data-toggle="buttons">
-            <label class="btn btn-info btn-lg active col-sm-4">
-                <input type="radio" name="struct" id="bin" value="bin" autocomplete="off" checked> To Binary Tree
+    <div class="form-group row p-2 ">
+        <div class="btn-group-toggle col-md-10" data-toggle="buttons" style="padding-top: 10px">
+            <label class="btn btn-info btn-lg active col-md-2">
+                <input hidden type="radio" name="struct" id="bin" value="bin" checked> To Binary Tree
             </label>
-            <label class="btn btn-info btn-lg col-sm-4">
-                <input type="radio" name="struct" id="root" value="root" autocomplete="off"> To Rooted Tree
+            <label class="btn btn-info btn-lg col-md-2">
+                <input hidden type="radio" name="struct" id="root" value="root"> To Rooted Tree
             </label>
-            <label class="btn btn-info btn-lg col-sm-4">
-                <input type="radio" name="struct" id="poly" value="poly" autocomplete="off"> To Polygon
+            <label class="btn btn-info btn-lg col-md-2">
+                <input hidden type="radio" name="struct" id="poly" value="poly"> To Polygon
             </label>
-            <label class="btn btn-info btn-lg col-sm-4">
-                <input type="radio" name="struct" id="table" value="table" autocomplete="off"> To Table Jung
+            <label class="btn btn-info btn-lg col-md-2">
+                <input hidden type="radio" name="struct" id="table" value="table"> To Table Jung
             </label>
         </div>
-        <div class="btn-group-toggle col-sm-2" data-toggle="buttons">
-            <label class=" btn btn-outline-info btn-lg btn-block" >
-                <input type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
+
+        <div class="btn-group col-md-2" data-toggle="buttons" style="padding-top: 10px">
+            <label class=" btn btn-outline-info btn-lg btn-block">
+                <input hidden="" type="checkbox" autocomplete="off" id="fl" name="flag"> Enable numbering
             </label>
         </div>
 
