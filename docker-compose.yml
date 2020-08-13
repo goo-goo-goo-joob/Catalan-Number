@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    image: CatalanNumber:latest
+    env_file: docker.env
+    restart: always
+    volumes:
+      - ./data:/data
+    network_mode: "host"
